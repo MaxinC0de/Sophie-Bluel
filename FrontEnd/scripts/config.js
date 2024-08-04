@@ -17,9 +17,12 @@ const URLS = {
     categories: `${apiURL}categories`,
 }
 
+// alerte sur le bouton valider si pas les 3 champs 
+// mettre ça var glob
+
 async function fetchProjets() {
-    const projets = await fetch(URLS.works)
-    return await projets.json() // return met fin à la fonction
+    const response = await fetch(URLS.works)
+    return await response.json()
 }
 async function fetchCategories() {
     const categories = await fetch(URLS.categories)
@@ -93,7 +96,7 @@ function createSecondModal() {
                     <i class="fa-regular fa-image"></i>
                     <img id="blah"></img>
                         <label for="input" class="bouton-upload-image">+ Ajouter photo</label>
-                        <input name="needed_image" accept="image/jpeg, image/png max-size:4096KB" type="file" id="input" style="display:none"/>
+                        <input name="needed_image" accept="image/jpg, image/png max-size:4096KB" type="file" id="input" style="display:none"/>
                     <p class="upload-p">jpeg, png: 4mo max</p>
                 </div>
                 <p>Titre</p>
@@ -117,7 +120,8 @@ async function deleteWork() {
     const projets = await fetchProjets()
     const trashes = document.querySelectorAll(".fa-trash-can")
     for (let i = 0; i < trashes.length; i++) {
-        trashes[i].addEventListener("click", () => {
+        trashes[i].addEventListener("click", (e) => {
+            e.preventDefault
             alert("Etes vous sûre de vouloir supprimer ce projet ?")
             const reponse = fetch(`${URLS.works}/${trashes[i].id}`, {
                 method: 'DELETE',
@@ -155,7 +159,3 @@ function displayUploadedImg() {
         }}      
     }
 }
-
-
-// bouton ajouter photo : margin quand nouveau row
-// on peut aussi juste push le projet au lieu de reset la galerie

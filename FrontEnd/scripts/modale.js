@@ -60,7 +60,6 @@ function transformModal() {
     btnValider.classList.remove("valid-form")
     btnValider.classList.add("bouton-valider")
     btnAjouterPhoto.style.display = "none"
-    btnValider.disabled = true
     // display uploaded image
     displayUploadedImg()
     // check if every form input is filled
@@ -74,8 +73,8 @@ function transformModal() {
             if (title.value !== "" && input.value !== "") {
                 btnValider.classList.remove("bouton-valider")
                 btnValider.classList.add("valid-form")
-                btnValider.disabled = false
-            }
+                btnValider.addEventListener("click", creerObjetJSON)
+            } 
         })
     }
     checkForm()    
@@ -95,14 +94,18 @@ function toFirstModal() {
 }
 
 // post project and close modal on posting project
-btnValider.addEventListener("click", creerObjetJSON)
-btnValider.addEventListener("click", closeModal)
+btnValider.addEventListener("click", (e) => {
+    e.preventDefault()
+    const title = document.querySelector(".modale-wrapper .modale-input")
+    const input = document.getElementById("input")
+    if (title.value !== "" && input.value !== "") {
+        closeModal()
+    } else if (title.value == "" || input.value == "") {
+        alert("Veuillez remplir chaque champ du formulaire avant de valider l'envoi du projet.")
+    }
+})
 
 async function creerObjetJSON() {
-    const title = document.querySelector(".modale-input").value
-    const category = document.querySelector(".select").value
-    const input = document.getElementById("input").files[0]
-
     const formData = new FormData()
     formData.append("title", title)
     formData.append("category", category)
