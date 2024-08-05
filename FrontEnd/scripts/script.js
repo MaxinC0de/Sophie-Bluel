@@ -14,13 +14,12 @@ async function genererGalerie() {
 }   
 
 async function creerProjets(projet) {    
-    const projets = await fetchProjets()
-
     const projetContainer = createElement("div", "img")
     const imageElement = createElement("img")
     const pElement = createElement("p", "p", projet.title)
 
     imageElement.src = projet.imageUrl
+    imageElement.setAttribute("id", projet.id)
 
     projetContainer.appendChild(imageElement)
     projetContainer.appendChild(pElement)

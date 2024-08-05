@@ -73,7 +73,6 @@ function transformModal() {
             if (title.value !== "" && input.value !== "") {
                 btnValider.classList.remove("bouton-valider")
                 btnValider.classList.add("valid-form")
-                btnValider.addEventListener("click", creerObjetJSON)
             } 
         })
     }
@@ -99,16 +98,21 @@ btnValider.addEventListener("click", (e) => {
     const title = document.querySelector(".modale-wrapper .modale-input")
     const input = document.getElementById("input")
     if (title.value !== "" && input.value !== "") {
+        creerObjetJSON()
         closeModal()
     } else if (title.value == "" || input.value == "") {
         alert("Veuillez remplir chaque champ du formulaire avant de valider l'envoi du projet.")
-    }
+    }   
 })
 
-async function creerObjetJSON() {
+function creerObjetJSON() {
+    const title = document.querySelector(".modale-wrapper .modale-input").value
+    const category = document.querySelector(".select")
+    const input = document.getElementById("input").files[0]
     const formData = new FormData()
+
     formData.append("title", title)
-    formData.append("category", category)
+    formData.append("category", category.value)
     formData.append("image", input)
 
     const reponse = fetch(URLS.works, {
@@ -118,5 +122,4 @@ async function creerObjetJSON() {
         },
         body: formData,
     })
-    fetchProjets()
 }

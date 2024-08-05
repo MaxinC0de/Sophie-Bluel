@@ -8,6 +8,7 @@ async function createButtons() {
     }
 }
 
+
 async function filter() {
     let projets = await fetchProjets()
     const buttons = document.querySelectorAll(".div-filtres")
@@ -44,11 +45,10 @@ async function filter() {
     })
 }
 
-function init() {
-    createButtons()
-    filter()
-}
-init()
+document.addEventListener("DOMContentLoaded", async () => {
+    await createButtons()
+    await filter()
+})
 
 async function resetButtons() {
     const buttons = document.querySelectorAll(".div-filtres")
