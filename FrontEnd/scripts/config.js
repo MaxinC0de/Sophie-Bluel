@@ -17,9 +17,6 @@ const URLS = {
     categories: `${apiURL}categories`,
 }
 
-// alerte sur le bouton valider si pas les 3 champs 
-// mettre ça var glob
-
 async function fetchProjets() {
     const response = await fetch(URLS.works)
     return await response.json()
@@ -117,7 +114,6 @@ function createSecondModal() {
 
 // delete work
 async function deleteWork() {
-    const projets = await fetchProjets()
     const trashes = document.querySelectorAll(".fa-trash-can")
     for (let i = 0; i < trashes.length; i++) {
         trashes[i].addEventListener("click", (e) => {

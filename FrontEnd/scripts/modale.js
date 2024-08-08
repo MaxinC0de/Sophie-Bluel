@@ -38,8 +38,6 @@ function closeModal() {
     arrow.style.display = "none"
     modaleBody.classList.add("modale-body")
     modaleBody.classList.remove("transformed-modale-body")
-    galerie.innerHTML = ""
-    genererGalerie()
     resetButtons()
 }
 
@@ -93,19 +91,9 @@ function toFirstModal() {
 }
 
 // post project and close modal on posting project
-btnValider.addEventListener("click", (e) => {
+btnValider.addEventListener("click", async (e) => {
     e.preventDefault()
-    const title = document.querySelector(".modale-wrapper .modale-input")
-    const input = document.getElementById("input")
-    if (title.value !== "" && input.value !== "") {
-        creerObjetJSON()
-        closeModal()
-    } else if (title.value == "" || input.value == "") {
-        alert("Veuillez remplir chaque champ du formulaire avant de valider l'envoi du projet.")
-    }   
-})
-
-function creerObjetJSON() {
+    let projets = await fetchProjets()
     const title = document.querySelector(".modale-wrapper .modale-input").value
     const category = document.querySelector(".select")
     const input = document.getElementById("input").files[0]
@@ -122,4 +110,12 @@ function creerObjetJSON() {
         },
         body: formData,
     })
-}
+    if (title.value !== "" && input.value !== "") {
+        closeModal()
+        projets = await fetchProjets()
+        galerie.innerHTML = ""
+        genererGalerie()
+    } else if (title.value == "" || input.value == "") {
+        alert("Veuillez remplir chaque champ du formulaire avant de valider l'envoi du projet.")
+    }   
+})

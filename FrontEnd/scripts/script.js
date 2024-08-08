@@ -9,9 +9,9 @@ function creationEtAncrageGalerieTitreFiltres() {
 
 // galerie
 async function genererGalerie() {
-    const projets = await fetchProjets()
+    let projets = await fetchProjets()
     projets.forEach(creerProjets)
-}   
+}
 
 async function creerProjets(projet) {    
     const projetContainer = createElement("div", "img")
