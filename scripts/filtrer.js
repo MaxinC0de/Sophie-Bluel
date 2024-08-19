@@ -1,13 +1,14 @@
 async function createButtons() {
-    const categories = await fetchCategories()
-    categories.unshift({id: 0, name: "Tous"})
-    for (i = 0; i < categories.length; i++) {
+    if (token == null && userId == null) {
+        const categories = await fetchCategories()
+        categories.unshift({id: 0, name: "Tous"})
+        for (i = 0; i < categories.length; i++) {
         const button = createElement("button", "div-filtres", `${categories[i].name}`)
         button.id = categories[i].id
         filtresBarre.appendChild(button)
     }
+    }
 }
-
 
 async function filter() {
     let projets = await fetchProjets()
